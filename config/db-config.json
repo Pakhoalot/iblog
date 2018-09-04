@@ -1,0 +1,5 @@
+{
+    "database":"mongo",
+    "version": "2.6.10",
+    "mongoUrl":"mongodb://localhost/my-iblog-development"
+}
