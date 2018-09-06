@@ -86,11 +86,93 @@ router.post('/getPosts', (req, res, next) => {
                                     cb(null,data);
                                 }
                             })
+                        },
+                        //文章页数
+                        function (cb) {
+                            post.getPageCount(params, (err, data) => {
+                                if(err){
+                                    cb(err);
+                                } else {
+                                    cb(null, data);
+                                }
+                            })
                         }
-                    ])
+                    ], (err, results) => {
+                        if(err) {
+                            cb(err);
+                        } else {
+                            cb(null, results);
+                        }
+                    });
                 }
 
-            ])
+            ], (err, result) => {
+                if(err) {
+                    cb(err);
+                } else {
+                    cb(null, result);
+                }
+            });
+        },
+
+        //获取分类
+        function (cb) {
+            category.getAll((err, data) => {
+                if(err) {
+                    cb(err)
+                } else {
+                    cb(null, data);
+                }
+            });
         }
-    ])
+    ], (err, result)=>{
+        if(err) {
+            next(err);
+        } else {
+            let posts,
+                pageCount,
+                categories,
+                cateId,
+                cateItem;
+            posts = results[0][0];
+            pageCount = results[0][1];
+            categories = results[1];
+            categories.unshift({
+                __id: '',
+                Alias: '',
+                CateName: res.__('Category.all'),
+                Img: '/static/images/全部分类.svg'
+            });
+            categories.push({
+                __id: 'other',
+                Alias: 'other',
+                CateName: res.__('Category.uncate'),
+                Img: '/static/images/未分类.svg'
+            });
+            for(let i = 0; i < posts.length; i++) {
+                result[i] = {
+                    Source: posts[i].Source,
+                    Alias: posts[i].Alias,
+                    Title: posts[i].Title,
+                    Url: posts[i].Url,
+                    PublishDate: moment(posts[i].CreateTime)
+                        .format('YYYY-MM-DD'),
+                    Host: posts[i].Url ? url.parse(posts[i].Url)
+                        .host : '',
+                    Summary: posts[i].Summary,
+                    UniqueId: posts[i].UniqueId,
+                    ViewCount: posts[i].ViewCount
+                };
+                cateId = posts[i].CategoryId;
+                cateItem = tool.jsonQuery(categories, {__id: cateId});
+                if(cateItem) {
+                    result[i].CategoryAlias = cateItem.Alias;
+                    result[i].CateName = cateItem.CateName;
+                }
+            }
+            res.send({posts: result, pageCount });
+        }
+    })
 })
+
+module.exports = router;

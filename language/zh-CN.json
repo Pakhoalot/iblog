@@ -1,1 +1,6 @@
-{}
+{
+	"Category": {
+		"all": "Category.all",
+		"uncate": "Category.uncate"
+	}
+}

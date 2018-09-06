@@ -42,7 +42,8 @@ router.get('/', (req, res, next) => {
         title: settings.SiteName,
         currentCate: '',
         isRoot: true
-      })
+      });
+
     }
   })
 });

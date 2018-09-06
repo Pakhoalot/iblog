@@ -2,12 +2,14 @@
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
-const logger = require('morgan');
+const morgan = require('morgan');
+const logger = require('./utility/logger');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-
+//路由设置
 const routes = require('./routes/index');
-const users = require('./routes/user');
+const blog = require('./routes/blog');
+
 
 const app = express();
 
@@ -20,8 +22,10 @@ app.locals.ENV_DEVELOPMENT = env == 'development';
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+
+logger.info('hello world');
 // app.use(favicon(__dirname + '/public/img/favicon.ico'));
-app.use(logger('dev'));
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
@@ -30,7 +34,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/blog', blog);
 
 /// catch 404 and forward to error handler
 app.use((req, res, next) => {
