@@ -1,6 +1,6 @@
 const categoryModel = require('../models/category').CategoryModel;
-const post = require('../models/post')
-    .PostModel;
+const Posts = require('../models/post')
+    .Posts;
 const shortid = require('shortid');
 const tool = require('../utility/tool');
 const redisClient = require('../utility/redisClient');

@@ -5,9 +5,15 @@ const base = db.base;
 //定义一个标题Schema
 const postSchema = base.extend({
     //标题
-    Title: { type: String },
+    Title: { 
+        type: String,
+        required: true
+     },
     //文章别名
-    Alias: { type: String },
+    Alias: { 
+        type: String,
+        required: true 
+    },
     //摘要
     Summary: { type: String },
     //来源
@@ -28,8 +34,9 @@ const postSchema = base.extend({
     IsDraft: { type: Boolean },
     //是否有效
     IsActive: { type: Boolean, default: true }
-
-
 });
 
-exports.PostModel = mongoose.model('post', postSchema, 'post');
+//添加方法
+
+
+exports.Posts = mongoose.model('Posts', postSchema);

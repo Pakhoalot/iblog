@@ -1,14 +1,18 @@
 var redis = require('redis');
 var config = require('../config/redis-config');
+const logger = require('./logger');
 var redisEnable = config.redis.enable;
 
 if (redisEnable) {
     // use custom redis url or localhost
     var client = redis.createClient(config.redis.port || 6379, config.redis.host || 'localhost');
     client.on('error', function (err) {
-        console.error('Redis连接错误: ' + err);
+        logger.error('Redis连接错误: ' + err);
         process.exit(1);
     });
+    client.on('ready', (err)=>{
+        logger.info("redis enable");
+    })
 }
 
 /**
