@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 //路由设置
 const routes = require('./routes/index');
 const blog = require('./routes/blog');
-
+const test = require('./routes/test');
 
 const app = express();
 
@@ -22,8 +22,6 @@ app.locals.ENV_DEVELOPMENT = env == 'development';
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-
-logger.info('hello world');
 // app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -35,6 +33,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/blog', blog);
+app.use('/test', test);
+
 
 /// catch 404 and forward to error handler
 app.use((req, res, next) => {
