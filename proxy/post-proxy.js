@@ -22,22 +22,22 @@ function getPostList({
   CategoryAlias = "",
 }, cb) {
   //判断参数合法性
-  if (typeof cb !== 'function' || 
-      typeof limit !== 'number' ||
-      typeof skip !== 'number') {
+  if (typeof cb !== 'function' ||
+    typeof limit !== 'number' ||
+    typeof skip !== 'number') {
     logger.error('param category invaild');
     cb(new TypeError(`${cb} is not a function`));
   }
 
   //尝试从缓存中提取post
   let tmp = {
-      skip: skip,
-      limit: limit,
-      sortBy: sortBy,
-      CategoryAlias: CategoryAlias,
+    skip: skip,
+    limit: limit,
+    sortBy: sortBy,
+    CategoryAlias: CategoryAlias,
   }
   const cache_key = redisClient.generateKey(POSTLIST_REDIS_PREFIX, tmp);
-  
+
   redisClient.getItem(cache_key, (err, postlist) => {
     if (err) {
       return cb(err);
@@ -76,7 +76,7 @@ function getPostList({
       if (err) return cb(err);
       if (postlist) {
         //有值,存入redis
-        redisClient.setItem(cache_key, postlist, redisClient.defaultExpired, err => {
+        redisClient.setItem(cache_key, postlist, err => {
           if (err) return cb(err);
 
           postlistKeysManager.add(cache_key);
@@ -88,6 +88,92 @@ function getPostList({
   })
 }
 
+/**
+ *根据id获取post
+ *
+ * @param {*} postId
+ * @param {*} cb
+ * @returns
+ */
+function getPost(postId, cb) {
+  //判断参数合法性
+  if (typeof postId === 'function' || !postId) {
+    return cb(new TypeError('param invalid in getPost'));
+  }
+  //尝试从缓存中获取
+  const cache_key = postId;
+  redisClient.getItem(cache_key, (err, post) => {
+    if (err) return cb(err);
+    //如果有值,则取出
+    if (post) {
+      return cb(null, post);
+    } else {
+      //从数据库中取出
+      Post.findOne({
+        _id: postId
+      }, (err, post) => {
+        if (err) return cb(err);
+        if (post) {
+          //存入redis中
+          redisClient.setItem(cache_key, post, err => {
+            if (err) return cb(err);
+          })
+        }
+        return cb(null, post);
+      })
+    }
+  })
+
+}
+
+/**
+ *修改一篇文章
+ *
+ * @param {*} {
+ *   Title,
+ *   Summary = '',
+ *   Source = '',
+ *   Content = '',
+ *   ContentType = '',
+ *   CategoryAlias = '',
+ *   Labels = [],
+ *   Url = '',
+ *   IsDraft = true,
+ *   IsActive = true
+ * }
+ * @param {*} cb
+ * @returns
+ */
+function modify(postId, update, cb) {
+  //判断参数是否合法
+  if (typeof postId === 'function' ||
+    typeof update === 'function') {
+    logger.error('param invaild');
+    return cb(new TypeError('param post invaild'));
+  }
+  //清除所有列表cache
+  redisClient.removeItems(postlistKeysManager, err => {
+    if (err) {
+      return cb(err);
+    }
+  });
+  //重置postlistKeysManager为空
+  postlistKeysManager.clear();
+  //清除本post的cache
+  const cache_key = postId;
+  redisClient.removeItem(cache_key, (err) => {
+    if (err) return cb(err);
+    //更新到数据库中
+    update.ModifyTime = Date.now();
+    Post.updateOne({
+      _id: postId
+    }, update, (err, result) => {
+      if (err) return cb(err);
+      else return cb(null, result);
+    });
+  });
+
+}
 /**
  *新建一个post
  *
@@ -120,7 +206,6 @@ function create({
 }, cb) {
   //判断参数是否合法
   if (!Title ||
-    typeof cb !== 'function' ||
     typeof IsDraft !== 'boolean' ||
     typeof IsActive !== 'boolean') {
 
@@ -141,24 +226,108 @@ function create({
     IsActive: IsActive,
   };
   //清除所有列表cache
-  for (let cache_key of postlistKeysManager) {
-    redisClient.removeItem(cache_key, (err) => {
-      if (err) {
-        logger.error('post_list cache key remove fail');
-        //保留处理,暂时不知道怎么处理,不能return cb(err)
-      }
-    });
-  }
-  let post = new Post(param);
-  post.save((err, post) => {
-    if (err) return cb(err);
-    else return cb(null, post);
+  redisClient.removeItems(postlistKeysManager, err => {
+    if (err) {
+      return cb(err);
+    }
   });
+  //
   //重置postlistKeysManager为空
   postlistKeysManager.clear();
 
+  //清除本post的cahce
+  const cache_key = postId;
+  redisClient.removeItem(cache_key, (err) => {
+    if (err) return cb(err);
+    //插入到数据库中
+    let post = new Post(param);
+    post.save((err, post) => {
+      if (err) return cb(err);
+      else return cb(null, post);
+    });
+  });
 }
 
+/**
+ *软删除
+ *
+ * @param {*} post_id
+ */
+function softDelete(post_id, cb) {
+  Post.updateOne({
+    _id: post_id
+  }, {
+    IsActive: false,
+    modifyTime: Date.now(),
+  }, (err, result) => {
+    if (err) {
+      return cb(err);
+    } else {
+      //删除列表cache
+      redisClient.removeItems(postlistKeysManager, err => {
+        if (err) {
+          logger.error(err.message);
+        }
+      })
+      postlistKeysManager.clear();
+      return cb(null, result);
+    }
+  });
+}
+
+/**
+ *对被软删除的文章还原
+ *
+ * @param {*} post_id
+ * @param {*} cb
+ */
+function undo(post_id, cb) {
+  Post.updateOne({
+    _id: post_id
+  }, {
+    IsActive: true,
+    ModifyTime: Date.now(),
+  }, (err, result) => {
+    if (err) {
+      return cb(err);
+    } else {
+      //删除列表cache
+      redisClient.removeItems(postlistKeysManager, err => {
+        if (err) {
+          logger.error(err.message);
+        }
+      })
+      postlistKeysManager.clear();
+      return cb(null, result);
+    }
+  });
+}
+
+
+/**
+ *删除一篇文章
+ *
+ * @param {*} post_id
+ * @param {*} cb
+ */
+function hardDelete(post_id, cb) {
+  Post.deleteOne({
+    _id: post_id
+  }, (err, result) => {
+    if (err) {
+      return cb(err);
+    } else {
+      //删除列表cache
+      redisClient.removeItems(postlistKeysManager, err => {
+        if (err) {
+          logger.error(err.message);
+        }
+      })
+      postlistKeysManager.clear();
+      return cb(null, result);
+    }
+  });
+}
 /* **********************内部函数************************************************* */
 
 
@@ -168,5 +337,10 @@ function create({
 
 module.exports = {
   getPostList: getPostList,
+  getPost: getPost,
+  modify: modify,
   create: create,
+  softDelete: softDelete,
+  hardDelete: hardDelete,
+  undo: undo,
 }

@@ -1,7 +1,8 @@
 {
-    "redis": {
-		"enable": true,
-		"host": "127.0.0.1",
-		"port": 6379
-	}
+  "enable": true,
+  "create_options": {
+    "host": "127.0.0.1",
+    "port": 6379
+	},
+	"CacheExpired": "300"
 }
