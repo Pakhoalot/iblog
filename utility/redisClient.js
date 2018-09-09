@@ -75,6 +75,32 @@ exports.removeItem = function (key, callback) {
 };
 
 /**
+     *根据对象属性和值拼装唯一key
+     *
+     * @param {*} [prefix] - key前缀
+     * @param {*} obj - 待解析对象
+     * @returns {string} -  拼装的key，带前缀的形如：prefix_name_Tom_age_20，不带前缀的形如：name_Tom_age_20
+     */
+    exports.generateKey = function(prefix, obj){
+        if(typeof prefix === 'object') {
+            obj = prefix;
+            prefix = undefined;
+        }
+        let key = '';
+        for(let attr in obj) {
+            let value = obj[attr];
+            key += attr.toString().toLowerCase()+'_'+value.toString();
+        }      
+        if(prefix) {
+            key = prefix + key;
+        }  
+        else {
+            key = key.substr(1);
+        }
+        return key;
+    }
+
+/**
  * 获取默认过期时间，单位秒
  */
 exports.defaultExpired = parseInt(require('../config/settings').CacheExpired);

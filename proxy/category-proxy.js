@@ -1,10 +1,8 @@
 const Category = require('../models/category');
-const shortid = require('shortid');
-const tool = require('../utility/tool');
 const redisClient = require('../utility/redisClient');
 const logger = require('../utility/logger');
 
-const redis_cache_key = 'categories';
+const CATEGORIES_REDIS_KEY = 'categories';
 /**
  *获取所有类别
  *
@@ -12,7 +10,7 @@ const redis_cache_key = 'categories';
  */
 function getAll(cb){
     //默认先从redis中调取
-    redisClient.getItem(redis_cache_key, (err, categories) => {
+    redisClient.getItem(CATEGORIES_REDIS_KEY, (err, categories) => {
         if(err) return cb(err);
         if(categories) {
             logging.debug("redis work, category get from cache");
@@ -25,7 +23,7 @@ function getAll(cb){
             if(categories) {
                 //存入缓存
                 logger.info('find and redis');
-                redisClient.setItem(redis_cache_key, categories, redisClient.defaultExpired, err => {
+                redisClient.setItem(CATEGORIES_REDIS_KEY, categories, redisClient.defaultExpired, err => {
                     if(err) {
                         return cb(err);
                     }
@@ -36,31 +34,51 @@ function getAll(cb){
     })
 }
 
+
 /**
  *新建一个类别
  *
- * @param {*} param 一个类category对象
+ * @param {*} {
+ *     CateName,
+ *     Alias,
+ *     Img = '',
+ *     Link = '',
+ * }
  * @param {*} cb
+ * @returns
  */
-function create(param, cb) {
-    //判断category是否非法
-    if(!param || typeof param === 'function') {
+function create({
+    CateName,
+    Alias,
+    Img = '',
+    Link = '',
+}, cb) {
+    //判断首参是否非法
+    if(!CateName || !Alias || typeof cb !== 'function') {
         logger.error('param category invaild');
-        cb(null);
+        return cb(new TypeError('param category invaild'));
     }
-    redisClient.removeItem(redis_cache_key, (err) => {
+    let param = {
+        CateName: CateName,
+        Alias: Alias,
+        Img: Img,
+        Link: Link,
+    }
+    redisClient.removeItem(CATEGORIES_REDIS_KEY, (err) => {
         if(err) {
-            logger.info('insert category fail');
-            cb(err);
+            logger.error('insert category fail');
+            return cb(err);
         }
         //成功删除缓存,插入到数据库
-        var category = new Category(param);
+        let category = new Category(param);
         category.save((err, category)=> {
-            if(err) cb(err);
+            if(err) return cb(err);
             else return cb(null, category);
         })
     });
 }
+
+
 /**
  *根据alias删除类别
  *
@@ -70,18 +88,19 @@ function create(param, cb) {
 function deleteByAlias(alias, cb) {
     if(!alias || typeof alias === 'function') {
         logger.error('categoryId invaild');
-        cb(null);
+        return cb(new TypeError("params invaild"));
     }
     //删除缓存
-    redisClient.removeItem(redis_cache_key, (err) => {
+    redisClient.removeItem(CATEGORIES_REDIS_KEY, (err) => {
         if(err) {
             logger.info('insert category fail');
-            cb(err);
+            return cb(err);
         }
         //成功删除缓存,删除数据库副本
         
         Category.deleteOne({Alias: alias}, (err)=> {
-            if(err) cb(err);
+            if(err) return cb(err);
+            else return cb(null);
         });
     });
 }

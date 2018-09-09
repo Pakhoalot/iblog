@@ -6,11 +6,12 @@ const morgan = require('morgan');
 const logger = require('./utility/logger');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-//路由设置
+//****************路由设置***********************//
 const routes = require('./routes/index');
 const blog = require('./routes/blog');
-const test = require('./routes/test');
-
+const category_test = require('./routes/category-test');
+const post_test = require('./routes/post-test');
+/* ******************************************* */
 const app = express();
 
 const env = process.env.NODE_ENV || 'development';
@@ -33,7 +34,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/blog', blog);
-app.use('/test', test);
+app.use('/category-test', category_test);
+app.use('/post-test', post_test);
 
 
 /// catch 404 and forward to error handler

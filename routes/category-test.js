@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const path =  require('path');
-const category = require('../proxy/category_proxy');
+const category = require('../proxy/category-proxy');
 const tool = require('../utility/tool');
 const logger = require('../utility/logger');
 
@@ -41,4 +41,5 @@ router.post('/category_deleteByAlias', (req, res, next) => {
     });
 
 })
+
 module.exports = router;

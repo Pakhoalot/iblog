@@ -24,7 +24,7 @@ moudule.exports = {
  */
 function getPosts(params, callback) {
     const cache_key = tool.generatekey('posts', params);
-    redisClient.getItem(cache_key, (err, post) => {
+    redisClient.getItem(cache_key, (err, posts) => {
         if(err) {
             return callback(err);
         }
