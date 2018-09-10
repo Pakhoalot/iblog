@@ -18,7 +18,7 @@ var postlistKeysManager = new Set();
 function getPostList({
   skip = 0,
   limit = 10,
-  sortBy = "CreateTime",
+  sort = "CreateTime",
   CategoryAlias = "",
 }, cb) {
   //判断参数合法性
@@ -33,7 +33,7 @@ function getPostList({
   let tmp = {
     skip: skip,
     limit: limit,
-    sortBy: sortBy,
+    sort: sort,
     CategoryAlias: CategoryAlias,
   }
   const cache_key = redisClient.generateKey(POSTLIST_REDIS_PREFIX, tmp);
@@ -68,9 +68,7 @@ function getPostList({
     let options = {
       limit: limit,
       skip: skip,
-      sort: {
-        [sortBy]: 'asc'
-      }
+      sort: sort
     }
     Post.find(query, post_projection, options, (err, postlist) => {
       if (err) return cb(err);
@@ -126,21 +124,12 @@ function getPost(postId, cb) {
 
 }
 
+
 /**
- *修改一篇文章
+ *修改一个post
  *
- * @param {*} {
- *   Title,
- *   Summary = '',
- *   Source = '',
- *   Content = '',
- *   ContentType = '',
- *   CategoryAlias = '',
- *   Labels = [],
- *   Url = '',
- *   IsDraft = true,
- *   IsActive = true
- * }
+ * @param {*} postId
+ * @param {*} update
  * @param {*} cb
  * @returns
  */
@@ -235,16 +224,11 @@ function create({
   //重置postlistKeysManager为空
   postlistKeysManager.clear();
 
-  //清除本post的cahce
-  const cache_key = postId;
-  redisClient.removeItem(cache_key, (err) => {
+  //插入到数据库中
+  let post = new Post(param);
+  post.save((err, post) => {
     if (err) return cb(err);
-    //插入到数据库中
-    let post = new Post(param);
-    post.save((err, post) => {
-      if (err) return cb(err);
-      else return cb(null, post);
-    });
+    else return cb(null, post);
   });
 }
 

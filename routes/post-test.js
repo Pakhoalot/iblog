@@ -6,6 +6,7 @@ const post = require('../proxy/post-proxy');
 /* *******文章相关接口测试路由******** */
 
 router.get('/post_getPostList', (req, res, next) => {
+  let param = req.query;
   //参数预处理
   if (typeof param.limit === 'string') {
     param.limit = parseInt(param.limit);
@@ -15,7 +16,7 @@ router.get('/post_getPostList', (req, res, next) => {
     param.skip = parseInt(param.skip);
     if (isNaN(param.skip)) delete param.skip;
   }
-  let param = req.query;
+
   post.getPostList(param, (err, postlist) => {
     if (err) next(err);
     else {
@@ -46,18 +47,18 @@ router.post('/post_getPost', (req, res, next) => {
 
 
 router.post('/post_modify', (req, res, next) => {
-    let param = req.body;
-    if (param.postId) {
-      postId = param.postId;
-      delete param.postId;
+  let param = req.body;
+  if (param.postId) {
+    postId = param.postId;
+    delete param.postId;
+  }
+  post.modify(postId, param, (err, post) => {
+    if (err) next(err);
+    else {
+      res.json(post);
     }
-    post.modify(postId, param, (err, post) => {
-      if (err) next(err);
-      else {
-        res.json(post);
-      }
-    });
-  })
+  });
+})
 
 
 
