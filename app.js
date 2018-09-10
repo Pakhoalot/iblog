@@ -1,4 +1,3 @@
-
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -6,6 +5,8 @@ const morgan = require('morgan');
 const logger = require('./utility/logger');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+//include handlebars
+const exphbs  = require('express-handlebars');
 //****************路由设置***********************//
 const routes = require('./routes/index');
 const blog = require('./routes/blog');
@@ -19,10 +20,17 @@ app.locals.ENV = env;
 app.locals.ENV_DEVELOPMENT = env == 'development';
 
 // view engine setup
+//use handlebars as default
+app.engine('handlebars', exphbs({
+    defaultLayout: 'main',
+    partialsDir: ['views/partials/']
+  }));
 
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+// app.set('view engine', 'pug');
+app.set('view engine', 'handlebars');
 
+/* ********************use middleware*************************** */
 // app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -31,12 +39,11 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+/* *********************routes********************************* */
 app.use('/', routes);
-app.use('/blog', blog);
 app.use('/category-test', category_test);
 app.use('/post-test', post_test);
-
+/* *********************routes********************************* */
 
 /// catch 404 and forward to error handler
 app.use((req, res, next) => {
