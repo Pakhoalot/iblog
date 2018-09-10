@@ -9,7 +9,6 @@ const bodyParser = require('body-parser');
 const exphbs  = require('express-handlebars');
 //****************路由设置***********************//
 const routes = require('./routes/index');
-const blog = require('./routes/blog');
 const category_test = require('./routes/category-test');
 const post_test = require('./routes/post-test');
 /* ******************************************* */
@@ -31,13 +30,14 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'handlebars');
 
 /* ********************use middleware*************************** */
-// app.use(favicon(__dirname + '/public/img/favicon.ico'));
+app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'public')));
 /* *********************routes********************************* */
 app.use('/', routes);

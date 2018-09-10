@@ -1,0 +1,27 @@
+body {
+    margin-bottom: 100px;
+}
+.errmessage{
+    margin-top: 100px;
+    text-align: center;
+}
+.errmessage .message {
+    font-size: 8em;
+    font-weight: bold;
+    color:white;
+    text-shadow:3px 3px 0.2em rgb(107, 107, 107);
+}
+.errmessage .statuscode {
+    font-size: 4em;
+    color:white;
+    font-weight: bold;
+    text-shadow:3px 3px 0.1em rgb(107, 107, 107);
+}
+.errmessage .stack {
+    text-align: left;
+    padding: 30px;
+    color: white;
+    background:rgba(97, 97, 97, 0.514);
+    border-radius: 5px;
+    border: 1px solid rgba(236, 236, 236, 0.3);
+}
