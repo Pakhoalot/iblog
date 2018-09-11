@@ -1,12 +1,14 @@
+/* 保证sticky footer 覆盖原生字体 */
 html {
   position: relative;
   min-height: 100%;
+
 }
 
 body {
   padding-top: 50px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  margin-bottom: 40px;
+  padding-bottom: 40px;
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 }
 .bottom-photo {
     position: absolute;
@@ -33,6 +35,10 @@ body {
   margin-top: 10px;
 }
 
+/* 调整navbar */
+
+
+
 ul.nav {
   padding-right: 15px;
   padding-left: 15px;
@@ -40,16 +46,27 @@ ul.nav {
 
 .navbar .navbar-brand {
   padding: 5px 15px;
+  margin-left: 0px;
 }
 
+.nav.navbar-nav {
+    padding-right: 0px;
+}
 .navbar .navbar-brand img {
   height: 40px;
   display: inline-block;
   padding-right: 5px;
+  padding-left: 15px;
 }
 
 button.navbar-toggle {
   border: 0px;
+}
+
+.navbar.navbar-default {
+    background-color: transparent;
+    border: 0;
+    transition: all 0.3s ease-out;
 }
 
 .navbar.navbar-fixed-top::before {
@@ -60,13 +77,18 @@ button.navbar-toggle {
   position: absolute;
   top: 0;
   left: 0;
-  opacity: 1;
+  opacity: 0;
+  background-color: transparent;
+  border: 0;
   -webkit-box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.2);
   box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.2);
-  transition: all 0.2s ease-out;
+  transition: all 0.3s ease-out;
   z-index: -1;
 }
 
+.navbar.navbar-default.affix {
+    background-color: white;
+}
 .navbar.navbar-fixed-top.affix::before {
   opacity: 1;
 }
