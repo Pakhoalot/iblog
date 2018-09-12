@@ -13,7 +13,7 @@ function getAll(cb){
     redisClient.getItem(CATEGORIES_REDIS_KEY, (err, categories) => {
         if(err) return cb(err);
         if(categories) {
-            logging.debug("redis work, category get from cache");
+            logger.debug("redis work, category get from cache");
             return cb(null, categories);
         }
         //缓存没有数据,从数据库中调取

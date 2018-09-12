@@ -18,7 +18,7 @@ var postlistKeysManager = new Set();
 function getPostList({
   skip = 0,
   limit = 10,
-  sort = "CreateTime",
+  sort = "-CreateTime",
   CategoryAlias = "",
 }, cb) {
   //判断参数合法性
@@ -49,14 +49,15 @@ function getPostList({
     //缓存失败, 从数据库中提取
     //构建query对象
     let query = {
+      IsDraft: false,
       IsActive: true,
-      IsDraft: false
     }
     if (CategoryAlias) query.CategoryAlias = CategoryAlias;
     //构建投影,为了不提供多余值,例如content
     let post_projection = {
       "_id": 1,
       "Title": 1,
+      "Summary": 1,
       "Alias": 1,
       "CategoryAlias": 1,
       "Labels": 1,
@@ -188,7 +189,7 @@ function create({
   Content = '',
   ContentType = '',
   CategoryAlias = '',
-  Labels = [],
+  Labels = '',
   Url = '',
   IsDraft = true,
   IsActive = true
@@ -209,7 +210,7 @@ function create({
     Content: Content,
     ContentType: ContentType,
     CategoryAlias: CategoryAlias,
-    Labels: Labels,
+    Labels: Labels.split(' '),
     Url: Url,
     IsDraft: IsDraft,
     IsActive: IsActive,

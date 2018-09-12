@@ -30,12 +30,14 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "debug": "^2.2.0",
+    "faker": "^4.1.0",
     "gulp": "^3.9.0",
-    "gulp-nodemon": "^2.0.2",
     "gulp-livereload": "^3.8.0",
+    "gulp-nodemon": "^2.0.2",
     "gulp-plumber": "^1.0.0",
     "mocha": "^4.0.1",
     "nyc": "^10.0.0",
+    "request": "^2.88.0",
     "supertest": "^2.0.0"
   }
 }

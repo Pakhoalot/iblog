@@ -15,7 +15,7 @@
                     </div>
                     {{/if}}
                     <div class="date-author">
-                        <span class="date"><script>writeTime("{{post.CreateTime}}")</script> </span><span>&nbsp&nbspby&nbsp</span><a href="#">PakhoLeung</a>
+                        <span class="date"><script>writeTime("{{post.CreateTime}}")</script> </span><span>&nbsp</span><a href="#">PakhoLeung</a>
                     </div>
                     <div class="summary">
                         <p>{{post.Summary}}</p>
@@ -25,15 +25,7 @@
                 <hr>
 
                 <div id="article-content" class="article-content">{{{post.Content}}}</div>
-                {{!--
-                <script src="/js/lib/marked.min.js"></script>
-                <script>
-                    document.getElementById('article-content').innerHTML = marked("{{{post.Content}}}");
-                </script> --}}
-                <ul class="pager">
-                    <li><a href="#">Previous</a></li>
-                    <li><a href="#">Next</a></li>
-                </ul>
+                
             </div>
 
 
@@ -76,6 +68,6 @@
 
     </div><!-- container -->
 
-    {{> qbt}}
+    {{> footer}}
     
     <script src="/js/article/sidebar.js"></script>

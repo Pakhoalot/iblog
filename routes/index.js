@@ -3,9 +3,30 @@ const router = express.Router();
 const path = require('path');
 const async = require('async');
 const tool = require('../utility/tool');
+const post = require('../proxy/post-proxy');
+const category = require('../proxy/category-proxy');
 
 /* GET home page. */
-router.get('/', (req, res, next) => {
-  res.render('index',{title: 'pakholeung\'s nest'});
+router.get(['/','/:category_alias'], (req, res, next) => {
+  let category_alias = req.params.category_alias;
+  if(!category_alias) category_alias = ""; 
+  post.getPostList({
+    CategoryAlias: category_alias,
+  },(err, postlist)=> {
+    if(err) return next(err);
+    else {
+      category.getAll((err, categories)=>{
+        if(err) return next(err);
+        else{
+          //数据预渲染
+          res.render('index', {
+            title: 'Pakho Leung\'s Nest',
+            postlist: postlist,
+            categories: categories,
+          })
+        }
+      })
+    }
+  })
 });
 module.exports = router;
