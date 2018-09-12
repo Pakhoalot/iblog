@@ -2,7 +2,6 @@
 html {
   position: relative;
   min-height: 100%;
-
 }
 
 body {
@@ -10,16 +9,19 @@ body {
   padding-bottom: 40px;
   font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 }
+
 .bottom-photo {
-    position: absolute;
-    bottom: 0;
-    /* height: auto; */
-    max-width: 100%;
-    z-index: -2;
+  position: absolute;
+  bottom: 0;
+  /* height: auto; */
+  max-width: 100%;
+  z-index: -2;
 }
+
 .bottom-photo img {
-    max-width: 100%;
+  max-width: 100%;
 }
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -31,14 +33,11 @@ body {
 }
 
 .footer p {
-  color: white;
+  color: rgb(129, 129, 129);
   margin-top: 10px;
 }
 
 /* 调整navbar */
-
-
-
 ul.nav {
   padding-right: 15px;
   padding-left: 15px;
@@ -50,8 +49,9 @@ ul.nav {
 }
 
 .nav.navbar-nav {
-    padding-right: 0px;
+  padding-right: 0px;
 }
+
 .navbar .navbar-brand img {
   height: 40px;
   display: inline-block;
@@ -64,9 +64,9 @@ button.navbar-toggle {
 }
 
 .navbar.navbar-default {
-    background-color: transparent;
-    border: 0;
-    transition: all 0.3s ease-out;
+  background-color: transparent;
+  border: 0;
+  transition: all 0.3s ease-out;
 }
 
 .navbar.navbar-fixed-top::before {
@@ -87,8 +87,78 @@ button.navbar-toggle {
 }
 
 .navbar.navbar-default.affix {
-    background-color: white;
+  background-color: white;
 }
+
 .navbar.navbar-fixed-top.affix::before {
   opacity: 1;
 }
+
+.navbar.navbar-default .dropdown-menu {
+  left: 0;
+  border-radius: 5px;
+  top: calc(100% + 10px);
+  padding: 10px;
+}
+
+
+.navbar.navbar-default .dropdown-menu > li a {
+  color: #555;
+}
+.navbar.navbar-default .dropdown-menu > li a:hover {
+  background-color: transparent;
+}
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.open>a:hover {
+  background-color: transparent;
+}
+@media (max-width: 750px) {
+  .navbar.navbar-default {
+    background-color: white;
+  }
+}
+
+@media (min-width: 750px) {
+  .nav.navbar-nav > li::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 0;
+    height: 100%;
+    border-bottom: 2px solid #777;
+    transition: 0.3s all ease-in-out;
+  }
+
+  .nav.navbar-nav > li:hover::before {
+    width: 100%;
+    left: 0;
+  }
+
+  .nav.navbar-nav > li:hover ~ li::before {
+    left: 0;
+  }
+  .navbar.navbar-default .dropdown-menu > .dropdown-triangle {
+    width: 0;
+    height: 0;
+    border-width: 0 10px 10px;
+    border-style: solid;
+    border-color: transparent transparent #ccc;
+    position: absolute;
+    left: 28px;
+    top: -10px;
+  }
+  .navbar.navbar-default .dropdown-menu > .dropdown-triangle::before {
+    content:'';
+    width: 0;
+    height: 0;
+    border-width: 0 10px 10px;
+    border-style: solid;
+    border-color: transparent transparent white;
+    position: absolute;
+    left: -10px;
+    top: 1px;
+  }
+}
+
+/* navbar end */

@@ -1,5 +1,5 @@
 const Post = require('../models/post');
-const redisClient = require('../utility/redisClient');
+const redisClient = require('../utility/redis-client');
 const logger = require('../utility/logger');
 const POSTLIST_REDIS_PREFIX = 'posts_list'
 var postlistKeysManager = new Set();

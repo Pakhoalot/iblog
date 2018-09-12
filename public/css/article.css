@@ -1,0 +1,71 @@
+/* 
+    article-title
+*/
+
+.main-title h1 {
+    font-size: 60px;
+}
+
+.sub-title {
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    color: grey;
+}
+
+.article-tag h2 {
+    font-size: 40px;
+}
+
+.date-author {
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    color: grey;
+    padding-bottom: 20px;
+}
+
+.summary,
+.article-content p,
+.article-content li,
+.article-content blockquote {
+    font-size: 18px;
+    font-family: 'Times New Roman', Times, serif;
+    color: grey;
+}
+
+.sidebar {
+    width: 175px;
+}
+.sidebar h5 {
+    font-size: 16px;
+}
+
+.sidebar .about {
+    background: rgb(248, 248, 248);
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.sidebar p,
+.sidebar li {
+    list-style: none;
+    color: gray;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.sidebar ul {
+    padding: 0;
+}
+
+.sidebar > *{
+    margin-bottom: 30px;
+}
+
+.sidebar.affix {
+    top: 60px;
+}
+
+@media(max-width:768px){
+    .sidebar {
+        display: none;
+    }
+}

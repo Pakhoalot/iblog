@@ -7,8 +7,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="icon" href="img/favicon.ico" />
-    <link rel="stylesheet" href="css/share.css">
+    <link rel="icon" href="/img/favicon.ico" />
+    <link rel="stylesheet" href="/css/share.css">
+    <script>
+        Date.prototype.format = function (fmt) {
+            var o = {
+                "M+": this.getMonth() + 1,                 //月份 
+                "d+": this.getDate(),                    //日 
+                "h+": this.getHours(),                   //小时 
+                "m+": this.getMinutes(),                 //分 
+                "s+": this.getSeconds(),                 //秒 
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+                "S": this.getMilliseconds()             //毫秒 
+            };
+            if (/(y+)/.test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            }
+            for (var k in o) {
+                if (new RegExp("(" + k + ")").test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                }
+            }
+            return fmt;
+        }
+        function writeTime(time){document.write(new Date(time).format("yyyy-MM-dd hh:mm:ss").toString())}
+    </script>
     <title>{{title}}</title>
     {{#if ENV_DEVELOPMENT}}
     <script src="http://localhost:35729/livereload.js"></script>
@@ -27,7 +50,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">
-                    <img src="img/favicon.ico" alt="logo">
+                    <img src="/img/favicon.ico" alt="logo">
                     <span class="brand">Pakho Leung's Nest</span>
                 </a>
             </div>
@@ -37,11 +60,22 @@
                     <li>
                         <a href="#">Blog</a>
                     </li>
-                    <li>
-                        <a href="#">Settings</a>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Settings</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuDivider">
+                            <a class="dropdown-triangle" href=""></a>
+                            {{!-- <li style="min-width: 200px;">
+                                <a class="switch-label" style="display: inline-block;">Lang</a>
+                                <div class="switch-group" style="display: inline-block; padding: 3px 20px 3px 0px;">
+                                    <a class="switch" href="">Lang</a>
+                                    <a class="switch" href="">En</a>
+                                </div>                                 
+                            </li> --}}
+                            <li><a href="">中文/English</a></li>
+                        </ul>
                     </li>
                     <li>
-                        <a href="#">Github</a>
+                        <a href="https://github.com/Pakhoalot/iblog">Github</a>
                     </li>
                     <li>
                         <a href="#">About</a>
@@ -53,17 +87,11 @@
     </nav>
 
     {{{body}}}
-
     {{!-- now footer --}}
     <footer class="footer">
-        <p class="text-muted">2018 © All Rights Reserved</p>
+        <p class="text-muted">Author pakholeung37@gmail.com | 2018, All Rights Reserved | MIT Lisence Check In Github</p>
     </footer>
 
-
-    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 
 </html>

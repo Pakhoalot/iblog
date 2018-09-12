@@ -1,5 +1,5 @@
 const Category = require('../models/category');
-const redisClient = require('../utility/redisClient');
+const redisClient = require('../utility/redis-client');
 const logger = require('../utility/logger');
 
 const CATEGORIES_REDIS_KEY = 'categories';

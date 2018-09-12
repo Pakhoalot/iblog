@@ -11,6 +11,7 @@ const exphbs  = require('express-handlebars');
 const routes = require('./routes/index');
 const category_test = require('./routes/category-test');
 const post_test = require('./routes/post-test');
+const articleRoutes = require('./routes/article')
 /* ******************************************* */
 const app = express();
 
@@ -41,6 +42,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 /* *********************routes********************************* */
 app.use('/', routes);
+app.use('/article', articleRoutes);
 app.use('/category-test', category_test);
 app.use('/post-test', post_test);
 /* *********************routes********************************* */
@@ -59,7 +61,7 @@ app.use((req, res, next) => {
 if (app.get('env') === 'development') {
     app.use((err, req, res, next) => {
         res.status(err.status || 500);
-        res.render('error-dev', {
+        res.render('error', {
             message: err.message,
             error: err,
             title: err.message,
@@ -74,7 +76,7 @@ app.use((err, req, res, next) => {
     res.render('error', {
         message: err.message,
         error: {},
-        title: 'error'
+        title: err.message
     });
 });
 
