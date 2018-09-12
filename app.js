@@ -12,6 +12,7 @@ const routes = require('./routes/index');
 const category_test = require('./routes/category-test');
 const post_test = require('./routes/post-test');
 const articleRoutes = require('./routes/article')
+const editRoutes = require('./routes/edit');
 /* ******************************************* */
 const app = express();
 
@@ -27,7 +28,6 @@ app.engine('handlebars', exphbs({
   }));
 
 app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'pug');
 app.set('view engine', 'handlebars');
 
 /* ********************use middleware*************************** */
@@ -45,6 +45,7 @@ app.use('/', routes);
 app.use('/article', articleRoutes);
 app.use('/category-test', category_test);
 app.use('/post-test', post_test);
+app.use('/edit', editRoutes);
 /* *********************routes********************************* */
 
 /// catch 404 and forward to error handler

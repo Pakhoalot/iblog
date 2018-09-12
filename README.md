@@ -1,2 +1,2 @@
 # iblog
-blog system build with express
+blog system build with express.

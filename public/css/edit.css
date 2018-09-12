@@ -1,0 +1,78 @@
+body {
+  padding: 50px 0 50px 0;
+  overflow: auto;
+}
+
+.navbar.navbar-default {
+  margin: 0;
+}
+
+.CodeMirror {
+  height: 500px;
+  /*SimpleMDE的高度*/
+}
+.CodeMirror-fullscreen {
+    top:100px;    
+}
+.editor-toolbar.fullscreen{
+    top: 50px;
+}
+.editor-statusbar.fullscreen {
+    z-index: 1000;
+}
+.editor-preview-side {
+    top:100px;
+}
+
+.navbar.navbar-default #input-title {
+    display: inline-block;
+    max-width: 500px;
+    height: 40px;
+    border: 0px;
+    font-size: 22px;
+    margin: 5px 5px;
+    border-bottom: #ccc solid 2px;
+    color: #777;
+
+}
+.navbar.navbar-default #input-title:focus {
+    outline: 0;
+}
+
+.navbar.navbar-default .navbar-btn .btn {
+    border: none;
+    color: #999;
+}
+
+.navbar.navbar-default .navbar-btn .btn:hover {
+    background-color: transparent;
+    color: #444;
+}
+.navbar.navbar-default .navbar-btn .btn#btn-save,
+.navbar.navbar-default .navbar-btn .btn#btn-drop {
+    margin-top: 4px;
+}
+
+.navbar.navbar-default .navbar-btn .btn#btn-publish {
+    margin-left: 20px;
+    font-size: 20px;
+}
+
+@media(max-width: 768px){
+    .CodeMirror-fullscreen {
+        top:150px;    
+    }
+    .editor-toolbar.fullscreen{
+        top: 100px;
+    }
+    .editor-statusbar.fullscreen {
+        z-index: 1000;
+    }
+    .editor-preview-side {
+        top:150px;
+    }
+    .navbar.navbar-default #input-title {
+        max-width: 300px;
+    
+    }
+}
