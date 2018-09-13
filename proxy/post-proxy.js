@@ -187,7 +187,7 @@ function create({
   Summary = '',
   Source = '',
   Content = '',
-  ContentType = '',
+  ContentType = 'markdown',
   CategoryAlias = '',
   Labels = '',
   Url = '',

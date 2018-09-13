@@ -9,8 +9,8 @@ const bodyParser = require('body-parser');
 const exphbs  = require('express-handlebars');
 //****************路由设置***********************//
 const routes = require('./routes/index');
-const category_test = require('./routes/category-test');
-const post_test = require('./routes/post-test');
+const categoryApi = require('./routes/category');
+const postApi = require('./routes/post');
 const articleRoutes = require('./routes/article')
 const editRoutes = require('./routes/edit');
 /* ******************************************* */
@@ -43,9 +43,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 /* *********************routes********************************* */
 app.use('/', routes);
 app.use('/article', articleRoutes);
-app.use('/category-test', category_test);
-app.use('/post-test', post_test);
 app.use('/edit', editRoutes);
+app.use('/api/category', categoryApi);
+app.use('/api/post', postApi);
 /* *********************routes********************************* */
 
 /// catch 404 and forward to error handler

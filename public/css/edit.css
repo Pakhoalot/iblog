@@ -17,8 +17,11 @@ body {
 .editor-toolbar.fullscreen{
     top: 50px;
 }
-.editor-statusbar.fullscreen {
-    z-index: 1000;
+.editor-statusbar {
+    position: fixed;
+    right: 0;
+    z-index: 100;
+    top: 70px;
 }
 .editor-preview-side {
     top:100px;
@@ -35,19 +38,36 @@ body {
     color: #777;
 
 }
+.navbar.navbar-default .navbar-header{
+    float: left;
+}
+.navbar.navbar-default .navbar-btn {
+    float: right;
+}
 .navbar.navbar-default #input-title:focus {
     outline: 0;
 }
 
-.navbar.navbar-default .navbar-btn .btn {
+.navbar.navbar-default .navbar-btn .btn,
+.btn.btn-default.btn-simple{
     border: none;
-    color: #999;
+    color: #777;
+    outline: 0;
 }
 
-.navbar.navbar-default .navbar-btn .btn:hover {
+.navbar.navbar-default .navbar-btn .btn:hover,
+.navbar.navbar-default .navbar-btn .btn:active,
+.navbar.navbar-default .navbar-btn .btn:focus,
+.btn.btn-default.btn-simple:hover,
+.btn.btn-default.btn-simple:active,
+.btn.btn-default.btn-simple:focus {
     background-color: transparent;
     color: #444;
+    box-shadow: none;
+    -webkit-box-shadow: none;
 }
+
+
 .navbar.navbar-default .navbar-btn .btn#btn-save,
 .navbar.navbar-default .navbar-btn .btn#btn-drop {
     margin-top: 4px;
@@ -59,20 +79,15 @@ body {
 }
 
 @media(max-width: 768px){
-    .CodeMirror-fullscreen {
-        top:150px;    
-    }
-    .editor-toolbar.fullscreen{
-        top: 100px;
-    }
-    .editor-statusbar.fullscreen {
-        z-index: 1000;
-    }
-    .editor-preview-side {
-        top:150px;
-    }
     .navbar.navbar-default #input-title {
         max-width: 300px;
     
+    }
+
+}
+
+@media(max-width: 550px){
+    .editor-statusbar {
+        display: none;
     }
 }

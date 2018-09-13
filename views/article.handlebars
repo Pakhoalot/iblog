@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-9 col-md-10">
+            <div class="col-md-10">
                 <div class="article-info">
                     {{#if post.Labels}}
                     <div class="label">
@@ -24,12 +24,14 @@
 
                 <hr>
 
-                <div id="article-content" class="article-content">{{{post.Content}}}</div>
+                <div id="article-content" class="article-content">
+                    {{{post.Content}}}
+                </div>
                 
             </div>
 
 
-            <div class="container col-sm-3 col-md-2">
+            <div class="container col-md-2">
                 <div class="sidebar">
                     <div class="about">
                         <h5>About</h5>
@@ -70,4 +72,5 @@
 
     {{> footer}}
     
+    <script src="/js/article/content.js"></script>
     <script src="/js/article/sidebar.js"></script>

@@ -5,7 +5,7 @@ const post = require('../proxy/post-proxy');
 
 /* *******文章相关接口测试路由******** */
 
-router.get('/post_getPostList', (req, res, next) => {
+router.get('/get-postlist', (req, res, next) => {
   let param = req.query;
   //参数预处理
   if (typeof param.limit === 'string') {
@@ -30,7 +30,7 @@ router.get('/post_getPostList', (req, res, next) => {
 
 
 
-router.post('/post_getPost', (req, res, next) => {
+router.post('/get', (req, res, next) => {
   let param = req.body;
   if (param.postId) {
     param = param.postId;
@@ -46,7 +46,7 @@ router.post('/post_getPost', (req, res, next) => {
 
 
 
-router.post('/post_modify', (req, res, next) => {
+router.post('/modify', (req, res, next) => {
   let param = req.body;
   if (param.postId) {
     postId = param.postId;
@@ -62,7 +62,7 @@ router.post('/post_modify', (req, res, next) => {
 
 
 
-router.post('/post_create', (req, res, next) => {
+router.post('/create', (req, res, next) => {
   let param = req.body;
   //转换boolean值
   if (param.IsDraft) {
@@ -79,7 +79,7 @@ router.post('/post_create', (req, res, next) => {
   });
 })
 
-router.post('/post_softDelete', (req, res, next) => {
+router.post('/soft-delete', (req, res, next) => {
   let param = req.body;
   if (param.postId) {
     param = param.postId;
@@ -92,7 +92,7 @@ router.post('/post_softDelete', (req, res, next) => {
   });
 })
 
-router.post('/post_undo', (req, res, next) => {
+router.post('/undo', (req, res, next) => {
   let param = req.body;
   if (param.postId) {
     param = param.postId;
@@ -105,7 +105,7 @@ router.post('/post_undo', (req, res, next) => {
   });
 })
 
-router.post('/post_hardDelete', (req, res, next) => {
+router.post('/hard-delete', (req, res, next) => {
   let param = req.body;
   if (param.postId) {
     param = param.postId;
