@@ -27,10 +27,22 @@ router.post('/create', (req, res, next) => {
 
 })
 
-router.post('/delete-by-alias', (req, res, next) => {
-    let params = req.body.Alias;
+router.post('/update-or-create', (req, res, next) => {
+    let params = req.body.CategoryName;
+    category.updateOrCreate(params,(err)=>{
+        if(err) next(err);
+        else {
+            result = {status: "sucess"};
+            res.json(result);
+        }
+    });
 
-    category.deleteByAlias(params,(err)=>{
+})
+
+router.post('/delete-by-categoryname', (req, res, next) => {
+    let params = req.body.CategoryName;
+
+    category.deleteByCategoryName(params,(err)=>{
         if(err) next(err);
         else {
             result = {status: "sucess"};

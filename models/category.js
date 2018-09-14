@@ -3,16 +3,10 @@ const mongoose = db.mongoose;
 
 const categorySchema = new mongoose.Schema({
     // 分类名称
-    CateName: { 
+    CategoryName: { 
         type: String,
         required: true,
-    },
-    // 分类别名
-    Alias: { 
-        type: String,
         unique: true,
-        required: true,
-        lowercase: true,
     },
     // 图标地址
     Img: { type: String },

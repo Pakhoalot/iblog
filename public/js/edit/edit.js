@@ -83,7 +83,7 @@ function publishPrepare(simplemde, $inputTitle) {
         Title: $inputTitle.val(),
         Content: simplemde.value(),
         ContentType: "markdown",
-        CategoryAlias: $category.val() || 'other',
+        CategoryName: $category.val() || 'Other',
         Labels: $labels.val(),
         IsDraft: false,
         IsActive: true,

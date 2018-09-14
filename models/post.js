@@ -17,7 +17,7 @@ const postSchema = new mongoose.Schema({
     //内容类型：默认空 (html)，可选markdown
     ContentType: { type: String },
     //分类Id
-    CategoryAlias: { type: String },
+    CategoryName: { type: String },
     //标签
     Labels: { type: [String] },
     //外链Url

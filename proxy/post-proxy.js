@@ -11,7 +11,7 @@ var postlistKeysManager = new Set();
  *     skip = 0,
  *     limit = 10,
  *     sortBy = "CreateTime",
- *     CategoryAlias = "",
+ *     CategoryName = "",
  * }
  * @param {*} cb
  */
@@ -19,7 +19,7 @@ function getPostList({
   skip = 0,
   limit = 10,
   sort = "-CreateTime",
-  CategoryAlias = "",
+  CategoryName = "",
 }, cb) {
   //判断参数合法性
   if (typeof cb !== 'function' ||
@@ -34,7 +34,7 @@ function getPostList({
     skip: skip,
     limit: limit,
     sort: sort,
-    CategoryAlias: CategoryAlias,
+    CategoryName: CategoryName,
   }
   const cache_key = redisClient.generateKey(POSTLIST_REDIS_PREFIX, tmp);
 
@@ -52,14 +52,14 @@ function getPostList({
       IsDraft: false,
       IsActive: true,
     }
-    if (CategoryAlias) query.CategoryAlias = CategoryAlias;
+    if (CategoryName) query.CategoryName = CategoryName;
     //构建投影,为了不提供多余值,例如content
     let post_projection = {
       "_id": 1,
       "Title": 1,
       "Summary": 1,
       "Content": 1,
-      "CategoryAlias": 1,
+      "CategoryName": 1,
       "Labels": 1,
       "ViewCount": 1,
       "ModifyTime": 1,
@@ -173,7 +173,7 @@ function modify(postId, update, cb) {
  *   Source = '',
  *   Content = '',
  *   ContentType = '',
- *   CategoryAlias = '',
+ *   CategoryName = '',
  *   Labels = [],
  *   Url = '',
  *   IsDraft = true,
@@ -188,7 +188,7 @@ function create({
   Source = '',
   Content = '',
   ContentType = 'markdown',
-  CategoryAlias = '',
+  CategoryName = '',
   Labels = '',
   Url = '',
   IsDraft = true,
@@ -209,7 +209,7 @@ function create({
     Source: Source,
     Content: Content,
     ContentType: ContentType,
-    CategoryAlias: CategoryAlias,
+    CategoryName: CategoryName,
     Labels: Labels.split(' '),
     Url: Url,
     IsDraft: IsDraft,

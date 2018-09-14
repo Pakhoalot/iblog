@@ -48,19 +48,17 @@ function getAll(cb){
  * @returns
  */
 function create({
-    CateName,
-    Alias,
+    CategoryName,
     Img = '',
     Link = '',
 }, cb) {
     //判断首参是否非法
-    if(!CateName || !Alias || typeof cb !== 'function') {
+    if(!CategoryName || typeof cb !== 'function') {
         logger.error('param category invaild');
         return cb(new TypeError('param category invaild'));
     }
     let param = {
-        CateName: CateName,
-        Alias: Alias,
+        CategoryName: CategoryName,
         Img: Img,
         Link: Link,
     }
@@ -78,16 +76,46 @@ function create({
     });
 }
 
+/**
+ *新增一个类别或更新它
+ *
+ * @param {*} CategoryName
+ * @param {*} cb
+ * @returns
+ */
+function updateOrCreate(CategoryName, cb) {
+    //判断首参是否非法
+    if(!CategoryName || typeof cb !== 'function') {
+        logger.error('param category invaild');
+        return cb(new TypeError('param category invaild'));
+    }
+    
+    redisClient.removeItem(CATEGORIES_REDIS_KEY, (err) => {
+        if(err) {
+            logger.error('insert category fail');
+            return cb(err);
+        }
+        //成功删除缓存,插入到数据库
+        Category.findOneAndUpdate(
+            {CategoryName: CategoryName},
+            {ModifyTime: Date.now()},
+            {upsert: true},
+            (err, category)=> {
+            if(err) return cb(err);
+            else return cb(null, category);
+        })
+    });
+}
 
 /**
- *根据alias删除类别
+ *根据CategoryName删除类别
  *
  * @param {*} alias
  * @param {*} cb
  */
-function deleteByAlias(alias, cb) {
-    if(!alias || typeof alias === 'function') {
-        logger.error('categoryId invaild');
+function deleteByCategoryName(CategoryName, cb) {
+    if(!CategoryName || typeof CategoryName === 'function') {
+        logger.error('categoryName invaild');
         return cb(new TypeError("params invaild"));
     }
     //删除缓存
@@ -98,7 +126,7 @@ function deleteByAlias(alias, cb) {
         }
         //成功删除缓存,删除数据库副本
         
-        Category.deleteOne({Alias: alias}, (err)=> {
+        Category.deleteOne({CategoryName: CategoryName}, (err)=> {
             if(err) return cb(err);
             else return cb(null);
         });
@@ -108,5 +136,6 @@ function deleteByAlias(alias, cb) {
 module.exports = {
     getAll: getAll,
     create: create, 
-    deleteByAlias: deleteByAlias,
+    updateOrCreate: updateOrCreate,
+    deleteByCategoryName: deleteByCategoryName,
 }
