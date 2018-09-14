@@ -26,7 +26,9 @@ body {
 .editor-preview-side {
     top:100px;
 }
-
+.editor-preview-side.editor-preview-active-side img{
+    width: 100%;
+}
 .navbar.navbar-default #input-title {
     display: inline-block;
     max-width: 500px;

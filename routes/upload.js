@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const cryptoRandomString = require('crypto-random-string');
 const uploadConfig = require("../config/upload-config");
-const path =  require('path');
+const path = require('path');
 
 /* *************setting upload-config************** */
 var storage = multer.diskStorage({
@@ -38,13 +38,21 @@ var upload = multer({
   }
 }).single('file');
 
-router.post('/', (req, res, next)=> {
-  upload(req, res, (err) =>{
+router.post('/', (req, res, next) => {
+  upload(req, res, (err) => {
     if (err) {
       next(err);
-    }
-    else {
-        res.json(req.file);
+    } else {
+      res.json({
+        "fieldname": req.file.fieldname,
+        "originalname": req.file.originalname,
+        "encoding": req.file.encoding,
+        "mimetype": req.file.mimetype,
+        "destination": req.file.destination.substr("./public".length),
+        "filename": "6cb9d70684f3241.jpg",
+        "path": req.file.path.substr("public".length),
+        "size": 123888
+      });
     }
   })
 })

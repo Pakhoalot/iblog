@@ -1,0 +1,27 @@
+<div id="modal-frame-upload" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4 id="modal-message-upload"></h4>
+                {{!-- modal for upload --}}
+                <div class="label-frame upload clearfix">
+                    <form id="sumbit-article" action="javascript:;" method="POST" role="form">
+
+
+                        <div class="input-group">
+                            <input type="text" class="form-control file-name-text" placeholder="accept jpg, png, gif less than 4mb." aria-describedby="basic-addon2" disabled="disabled">
+                            <span class="btn btn-default file-browser input-group-addon" id="basic-addon2">browsers</span>
+                        </div>
+                        <input style="display:none;" type="file" name="file" id="upload-file">
+
+                        <div class="text-center">
+                            <button type="button" class="btn btn-lg btn-default btn-simple" data-dismiss="modal">Close</button>
+                            <button id="upload-btn" type="submit" class="btn btn-lg btn-default btn-simple">Upload</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

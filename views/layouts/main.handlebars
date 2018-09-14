@@ -30,7 +30,7 @@
             }
             return fmt;
         }
-        function writeTime(time){document.write(new Date(time).format("yyyy-MM-dd hh:mm:ss").toString())}
+        function writeTime(time) { document.write(new Date(time).format("yyyy-MM-dd hh:mm:ss").toString()) }
     </script>
     <title>{{title}}</title>
     {{#if ENV_DEVELOPMENT}}
@@ -57,8 +57,9 @@
 
             <div id="navbar" class="collapse navbar-collapse navbar-right">
                 <ul class="nav navbar-nav">
+
                     <li>
-                        <a href="/">Blog</a>
+                        <a href="https://github.com/Pakhoalot/iblog">Github</a>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="">Settings</a>
@@ -69,13 +70,10 @@
                                 <div class="switch-group" style="display: inline-block; padding: 3px 20px 3px 0px;">
                                     <a class="switch" href="">Lang</a>
                                     <a class="switch" href="">En</a>
-                                </div>                                 
+                                </div>
                             </li> --}}
                             <li><a href="">中文/English</a></li>
                         </ul>
-                    </li>
-                    <li>
-                        <a href="https://github.com/Pakhoalot/iblog">Github</a>
                     </li>
                     <li>
                         <a href="">About</a>
@@ -87,7 +85,7 @@
     </nav>
 
     {{{body}}}
-    
+
 
 </body>
 
