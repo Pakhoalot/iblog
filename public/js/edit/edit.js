@@ -9,11 +9,13 @@ $(document).ready(function () {
   });
   //默认双屏
   simplemde.toggleSideBySide();
+  //加载post.content(如果有)
+  simplemde.value($('.tmp-content').text());
+  $('.tmp-content').text('');
   //隐藏全屏按钮
   $(".fa.fa-arrows-alt").hide();
-
-  let $inputTitle = $("#input-title");
   //调整title输入框
+  let $inputTitle = $("#input-title");
   inputTitleResize($inputTitle);
   //加载publish逻辑
   publishPrepare(simplemde, $inputTitle);

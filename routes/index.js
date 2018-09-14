@@ -4,7 +4,7 @@ const post = require('../proxy/post-proxy');
 const category = require('../proxy/category-proxy');
 
 /* GET home page. */
-router.get(['/','/blog/:category_alias'], (req, res, next) => {
+router.get(['/','/blog','/blog/:category_alias'], (req, res, next) => {
   let category_alias = req.params.category_alias;
   if(!category_alias) category_alias = ""; 
   post.getPostList({
