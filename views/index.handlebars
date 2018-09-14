@@ -11,7 +11,8 @@
             <a href="/article/{{_id}}" class="article-title">
               <h3 class="list-group-item-heading">{{Title}}</h3>
             </a>
-            <p class="list-group-item-text article-summary">{{Summary}}<a href="/article/{{_id}}">read
+            <p class="list-group-item-text article-summary">
+              {{#if Content}} {{shorten Content}} {{/if}}<a href="/article/{{_id}}">read
                 more</a></p>
             <div class="label-group">
               
@@ -37,15 +38,16 @@
 
       <div class="index-sidebar">
 
+        
 
+        
         <ul class="list-group">
+          <a href="/edit" type="button" class="btn btn-md btn-block btn-info"><b>New Article</b></a>
           <a href="/" class="list-group-item">
-            <span class="badge">5</span>
             <span>All</span>
           </a>
           {{#each categories}}
-          <a href="/{{Alias}}" class="list-group-item">
-            <span class="badge">5</span>
+          <a href="/blog/{{Alias}}" class="list-group-item">
             <span>{{CateName}}</span>
           </a>
           {{/each}}

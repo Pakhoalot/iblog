@@ -31,7 +31,16 @@
     font-family: 'Times New Roman', Times, serif;
     color: grey;
 }
-
+pre {
+    border: none;
+    background-color: transparent;
+    padding: 10px 0px;
+    
+}
+pre code.hljs{
+    border-radius: 4px;
+    padding: 16px;
+}
 .sidebar {
     width: 175px;
 }

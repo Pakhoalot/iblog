@@ -3,3 +3,4 @@ log/
 test/
 .nyc_output
 .sass-cache
+public/tmp/

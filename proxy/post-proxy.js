@@ -58,7 +58,7 @@ function getPostList({
       "_id": 1,
       "Title": 1,
       "Summary": 1,
-      "Alias": 1,
+      "Content": 1,
       "CategoryAlias": 1,
       "Labels": 1,
       "ViewCount": 1,

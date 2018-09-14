@@ -20,6 +20,14 @@ router.get(['/','/blog/:category_alias'], (req, res, next) => {
             title: 'Pakho Leung\'s Nest',
             postlist: postlist,
             categories: categories,
+            //descripte render level handlebars helpers
+            helpers:{
+              shorten: function (str) {
+                if(typeof str === 'string')
+                  return str.substr(0, 244) + '...';
+                else return "hello world";
+              }
+            }
           })
         }
       })

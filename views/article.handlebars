@@ -1,5 +1,6 @@
-{{!-- < main --}} <link rel="stylesheet" href="/css/article.css">
-
+{{!-- < main --}} 
+    <link rel="stylesheet" href="/css/article.css">
+    <link rel="stylesheet" href="/css/lib/highlight/github.css">
     <div class="container article-container">
         <div class="article-title">
             <div class="main-title">
@@ -15,7 +16,8 @@
                     </div>
                     {{/if}}
                     <div class="date-author">
-                        <span class="date"><script>writeTime("{{post.CreateTime}}")</script> </span><span>&nbsp</span><a href="#">PakhoLeung</a>
+                        <span class="date">
+                            <script>writeTime("{{post.CreateTime}}")</script> </span><span>&nbsp</span><a href="#">PakhoLeung</a>
                     </div>
                     <div class="summary">
                         <p>{{post.Summary}}</p>
@@ -27,7 +29,7 @@
                 <div id="article-content" class="article-content">
                     {{{post.Content}}}
                 </div>
-                
+
             </div>
 
 
@@ -71,6 +73,6 @@
     </div><!-- container -->
 
     {{> footer}}
-    
+    <script src="/js/lib/highlight.pack.js"></script>
     <script src="/js/article/content.js"></script>
     <script src="/js/article/sidebar.js"></script>

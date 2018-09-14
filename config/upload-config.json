@@ -1,0 +1,6 @@
+{
+    "middleware": "multer",
+    "destination": "./public/tmp",
+    "fileSize": 4000000,
+    "files": 10
+}

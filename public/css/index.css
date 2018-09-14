@@ -50,7 +50,9 @@
 .index-sidebar.affix {
   top: 60px;
 }
-
+.index-sidebar .btn-block {
+  margin: 10px 0;
+}
 @media (min-width: 992px) {
   .index-sidebar.affix-bottom {
     position: absolute;
