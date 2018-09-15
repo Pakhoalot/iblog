@@ -32,9 +32,12 @@
             </div>
                 <div class="navbar-btn navbar-right" role="group">
                     <a id="btn-drop" class="hidden-xs btn btn-md btn-default">Drop</a>
-                    <button id="btn-save" class="hidden-xs btn btn-md btn-default">Save</button>
+                    {{#if post._id}}
+                    <a id="btn-save" class=" btn btn-default">Save</a>
+                    {{else}}
+                    <button id="btn-draft" class="hidden-xs btn btn-md btn-default">Save as draft</button>
                     <a id="btn-publish" class=" btn btn-default">Publish</a>
-
+                    {{/if}}
                 </div>
 
 

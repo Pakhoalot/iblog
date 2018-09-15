@@ -30,7 +30,7 @@ router.get(['/','/:id'], (req, res, next) => {
         res.render('edit', {
             title: "New Article",
             layout: 'edit-layout',
-            post: {},
+            // post: {},
             helpers: helpers,
         });
     }

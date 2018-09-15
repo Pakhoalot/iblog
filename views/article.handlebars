@@ -1,5 +1,4 @@
-{{!-- < main --}} 
-    <link rel="stylesheet" href="/css/article.css">
+{{!-- < main --}} <link rel="stylesheet" href="/css/article.css">
     <link rel="stylesheet" href="/css/lib/highlight/github.css">
     <div class="container article-container">
         <div class="article-title">
@@ -10,11 +9,11 @@
         <div class="row">
             <div class="col-md-10">
                 <div class="article-info">
-                    {{#if post.Labels}}
-                    <div class="label">
-                        <p>{{post.Labels}}</p>
-                    </div>
-                    {{/if}}
+                    <h4>
+                        {{#each post.Labels}}
+                        <span class="label label-default">{{this}}</span>
+                        {{/each}}
+                    </h4>
                     <div class="date-author">
                         <span class="date">
                             <script>writeTime("{{post.CreateTime}}")</script> </span><span>&nbsp</span><a href="#">PakhoLeung</a>

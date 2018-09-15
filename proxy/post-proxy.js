@@ -155,6 +155,8 @@ function modify(postId, update, cb) {
     if (err) return cb(err);
     //更新到数据库中
     update.ModifyTime = Date.now();
+    //对标签进行处理
+    if(update.Labels) update.Labels = update.Labels.split(' '),
     Post.updateOne({
       _id: postId
     }, update, (err, result) => {

@@ -70,11 +70,12 @@ body {
 }
 
 
-.navbar.navbar-default .navbar-btn .btn#btn-save,
+.navbar.navbar-default .navbar-btn .btn#btn-draft,
 .navbar.navbar-default .navbar-btn .btn#btn-drop {
     margin-top: 4px;
 }
 
+.navbar.navbar-default .navbar-btn .btn#btn-save,
 .navbar.navbar-default .navbar-btn .btn#btn-publish {
     margin-left: 20px;
     font-size: 20px;
