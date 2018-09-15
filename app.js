@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const logger = require('./utility/logger');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+var helmet = require('helmet');
 
 //include handlebars
 const exphbs = require('express-handlebars');
@@ -22,6 +23,7 @@ const env = process.env.NODE_ENV || 'development';
 app.locals.ENV = env;
 app.locals.ENV_DEVELOPMENT = env == 'development';
 
+
 /* ********************load view engine ***************/
 app.engine('handlebars', exphbs({
   defaultLayout: 'main',
@@ -32,6 +34,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'handlebars');
 
 /* ********************use middleware*************************** */
+app.use(helmet());
 app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(morgan('dev'));
 app.use(bodyParser.json());

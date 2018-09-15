@@ -16,33 +16,33 @@ $(document).ready(function () {
   $(".fa.fa-arrows-alt").hide();
   //调整title输入框
   let $inputTitle = $("#input-title");
+
   //构建$modalDailog类************************************************
+  let $modalOnlyMessage = $("#modal-only-message")
+  $modalOnlyMessage.showMessage = function (message) {
+    $(this).text(message);
+    $(this).modal("show");
+  }
+  $modalOnlyMessage.MessageFuncGen = function (message) {
+    return function () {
+      $(this).find(".modal-title").text(message);
+      $(this).modal("show");
+    }
+  }
+  $modalOnlyMessage.showRequired = $modalOnlyMessage.MessageFuncGen("title and article required.");
+  $modalOnlyMessage.showSaveSuccess = $modalOnlyMessage.MessageFuncGen("Article has been saved!");
+  $modalOnlyMessage.showPublishSuccess = $modalOnlyMessage.MessageFuncGen("article has been published!");
+
   let $modalDailog = $("#modal-frame");
   $modalDailog.$modalMessage = $('#modal-message');
   $modalDailog.$labelFramePublish = $(".label-frame.publish");
   $modalDailog.$submitBtn = $("#submit-btn");
   $modalDailog.$saveBtn = $("#save-btn");
-
-  $modalDailog.showRequired = function () {
-    this.$modalMessage.text("title and article required.");
-    this.$labelFramePublish.hide();
-    this.modal("show");
-  }
   $modalDailog.showLabelsCategory = function () {
     this.$modalMessage.text("You are almost here.");
-    this.$labelFramePublish.show();
     this.modal("show");
   }
-  $modalDailog.showPublishSuccess = function () {
-    this.$modalMessage.text("Your article has been published!");
-    this.$labelFramePublish.hide();
-    this.modal("show");
-  }
-  $modalDailog.showSaveSuccess = function () {
-    this.$modalMessage.text("Your article has been saved!");
-    this.$labelFramePublish.hide();
-    this.modal("show");
-  }
+
   /* *************************************************** */
   inputTitleResize();
   //加载publish逻辑
@@ -70,7 +70,7 @@ $(document).ready(function () {
     });
   }
 
-  
+
   /**
    *处理publish逻辑
    *
@@ -81,7 +81,7 @@ $(document).ready(function () {
     $btnPublish.click(function (e) {
       e.preventDefault();
       if (!$inputTitle.val()) {
-        $modalDailog.showRequired();
+        $modalOnlyMessage.showRequired();
       } else {
         //可上传
         //弹出modal
@@ -93,7 +93,7 @@ $(document).ready(function () {
     //准备上传
     $modalDailog.$submitBtn.on('click', function (e) {
       e.preventDefault();
-
+      $modalDailog.modal("hide");
       //加锁,防止多次点击    
       $(this).attr('disabled', "true");
       //发送ajax请求
@@ -109,17 +109,16 @@ $(document).ready(function () {
         .success(function (response) {
 
           $(this).removeAttr("disabled");
-          $modalDailog.showPublishSuccess();
+          $modalOnlyMessage.showPublishSuccess();
           setTimeout(() => {
             window.location.href += '/' + response._id;
-
           }, 2000);
 
         })
       return;
     });
   }
-/**
+  /**
    *处理save逻辑
    *
    */
@@ -129,7 +128,7 @@ $(document).ready(function () {
     $btnSave.click(function (e) {
       e.preventDefault();
       if (!$inputTitle.val()) {
-        $modalDailog.showRequired();
+        $modalOnlyMessage.showRequired();
       } else {
         //可上传
         //弹出modal
@@ -139,9 +138,9 @@ $(document).ready(function () {
     let $labels = $("#input-labels");
     let $category = $("#input-category");
     //准备上传
-    $modalDailog.$saveBtn.on('click', function (e) {
+    $modalDailog.$saveBtn.click( function (e) {
       e.preventDefault();
-
+      $modalDailog.modal("hide");
       //加锁,防止多次点击    
       $(this).attr('disabled', "true");
       //发送ajax请求
@@ -157,15 +156,15 @@ $(document).ready(function () {
         })
         .success(function (response) {
           $(this).removeAttr("disabled");
-          $modalDailog.showSaveSuccess();
+          $modalOnlyMessage.showSaveSuccess();
           setTimeout(() => {
             window.location.reload();
           }, 2000);
         })
-        .error(function(response){
+        .error(function (response) {
           alert('error');
           $(this).removeAttr("disabled");
-          
+
         })
       return;
     });
