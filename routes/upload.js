@@ -51,7 +51,6 @@ router.post('/', (req, res, next) => {
         "destination": req.file.destination.substr("./public".length),
         "filename": "6cb9d70684f3241.jpg",
         "path": req.file.path.substr("public".length),
-        "size": 123888
       });
     }
   })

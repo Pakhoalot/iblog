@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="/css/login.css">
+<div class="wrapper center-block">
+    <form id="login-form" action="" method="POST" role="form">
+        <legend>Please sign in</legend>
+        <div class="form-group">
+            <label for="username-input">Username</label>
+            <input value="{{user.username}}" name="username" type="text" class="form-control" id="username-input" >
+            <label for="password-input">Password</label>
+            <input value="{{user.password}}" name="password" type="password" class="form-control" id="password-input" >
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" class="checkbox" value="remember">
+                    Remember me
+                </label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-block btn-default">Login</button>
+    </form>
+
+</div>
+{{> modal-message}}
+{{> footer}}
+<p class="message-tmp" style="display:none;">{{message}}</p>
+<script src="/js/lib/spark-md5.min.js"></script>
+<script src="/js/login.js"></script>

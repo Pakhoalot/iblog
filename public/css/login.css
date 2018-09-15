@@ -1,0 +1,26 @@
+body {
+    display: flex;
+    margin:0;
+    padding-top: 150px;
+    justify-content: center;
+    flex-direction: column;
+    /* background-color: rgb(240, 240, 240); */
+}
+.wrapper {
+    width: 300px;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 5px;
+    transition: all 6s ease-in-out;
+
+}
+
+#inputemail {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+#inputpassword {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}

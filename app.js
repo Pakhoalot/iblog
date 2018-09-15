@@ -5,8 +5,10 @@ const morgan = require('morgan');
 const logger = require('./utility/logger');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-var helmet = require('helmet');
-
+const session = require('express-session');
+const passport = require('passport');
+const helmet = require('helmet');
+const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 //include handlebars
 const exphbs = require('express-handlebars');
 //****************路由设置***********************//
@@ -16,6 +18,7 @@ const postApi = require('./routes/post');
 const articleRoutes = require('./routes/article')
 const editRoutes = require('./routes/edit');
 const uploadRoutes = require('./routes/upload');
+const authRoutes = require('./routes/auth');
 /* ******************************************* */
 const app = express();
 
@@ -35,23 +38,34 @@ app.set('view engine', 'handlebars');
 
 /* ********************use middleware*************************** */
 app.use(helmet());
-app.use(favicon(__dirname + '/public/img/favicon.ico'));
-app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: false
 }));
 app.use(cookieParser());
+app.use(session({
+  secret: 'secret',
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000
+  },
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(favicon(__dirname + '/public/img/favicon.ico'));
+app.use(morgan('dev'));
 
 
 /* *********************routes********************************* */
 app.use('/', routes);
 app.use('/article', articleRoutes);
-app.use('/edit', editRoutes);
+app.use('/edit', ensureLoggedIn('/login'), editRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/api/category', categoryApi);
 app.use('/api/post', postApi);
+app.use('/', authRoutes);
 /* *********************routes********************************* */
 
 
