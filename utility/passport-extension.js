@@ -34,7 +34,7 @@ passport.ensureLoggedIn = function (options) {
   passport.ensureAuthorized = function (){
       return function(req, res, next) {
           if(!req.isAuthenticated || !req.isAuthenticated()) {
-              return res.send(401, 'unauthorized');
+              return res.status(401).send('unauthorized')
           } 
           next();
       }

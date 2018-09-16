@@ -20,6 +20,7 @@ const articleRoutes = require('./routes/article')
 const editRoutes = require('./routes/edit');
 const uploadRoutes = require('./routes/upload');
 const authRoutes = require('./routes/auth');
+const adminRoutes = require('./routes/admin');
 /* ******************************************* */
 const app = express();
 
@@ -69,6 +70,7 @@ app.use('/upload', uploadRoutes);
 app.use('/api/category', categoryApi);
 app.use('/api/post', passport.ensureAuthorized(), postApi);
 app.use('/', authRoutes);
+app.use('/admin', adminRoutes);
 /* *********************routes********************************* */
 
 

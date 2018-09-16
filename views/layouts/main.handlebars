@@ -57,33 +57,21 @@
 
             <div id="navbar" class="collapse navbar-collapse navbar-right">
                 <ul class="nav navbar-nav">
-
                     <li>
+                        <a href="/edit" class="new-article-btn">New Article</a>
+                    </li>
+                    <li class="underline">
                         <a href="https://github.com/Pakhoalot/iblog">Github</a>
                     </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="">Settings</a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuDivider">
-                            <a class="dropdown-triangle" href=""></a>
-                            {{!-- <li style="min-width: 200px;">
-                                <a class="switch-label" style="display: inline-block;">Lang</a>
-                                <div class="switch-group" style="display: inline-block; padding: 3px 20px 3px 0px;">
-                                    <a class="switch" href="">Lang</a>
-                                    <a class="switch" href="">En</a>
-                                </div>
-                            </li> --}}
-                            <li><a href="">中文/English</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="">About</a>
-                    </li>
                     {{#if user}}
-                    <li>
+                    <li class="underline">
+                        <a href="/admin">Backend</a>
+                    </li>
+                    <li class="underline">
                         <a href="/logout">Logout</a>
                     </li>
                     {{else}}
-                    <li>
+                    <li class="underline">
                         <a href="/login">Login</a>
                     </li>
                     {{/if}}

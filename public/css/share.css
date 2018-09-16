@@ -101,17 +101,34 @@ button.navbar-toggle {
   padding: 10px;
 }
 
+.navbar.navbar-default .new-article-btn {
+  border-radius: 18px;
+  padding: 5px 11px;
+  margin: 10px 0px;
+  background-color: #10d69b;
+  color: white;
+  font-weight: bold;
+}
 
-.navbar.navbar-default .dropdown-menu > li a {
+.navbar.navbar-default .new-article-btn:hover,
+.navbar.navbar-default .new-article-btn:active{
+  background-color: #11c58f;
+  color: white;
+}
+
+.navbar.navbar-default .dropdown-menu>li a {
   color: #555;
 }
-.navbar.navbar-default .dropdown-menu > li a:hover {
+
+.navbar.navbar-default .dropdown-menu>li a:hover {
   background-color: transparent;
 }
+
 .navbar-default .navbar-nav>.open>a,
 .navbar-default .navbar-nav>.open>a:hover {
   background-color: transparent;
 }
+
 @media (max-width: 750px) {
   .navbar.navbar-default {
     background-color: white;
@@ -119,7 +136,7 @@ button.navbar-toggle {
 }
 
 @media (min-width: 750px) {
-  .nav.navbar-nav > li::before {
+  .nav.navbar-nav>li.underline::before {
     content: "";
     position: absolute;
     top: 0;
@@ -130,15 +147,16 @@ button.navbar-toggle {
     transition: 0.3s all ease-in-out;
   }
 
-  .nav.navbar-nav > li:hover::before {
+  .nav.navbar-nav>li.underline:hover::before {
     width: 100%;
     left: 0;
   }
 
-  .nav.navbar-nav > li:hover ~ li::before {
+  .nav.navbar-nav>li.underline:hover~li.underline::before {
     left: 0;
   }
-  .navbar.navbar-default .dropdown-menu > .dropdown-triangle {
+
+  .navbar.navbar-default .dropdown-menu>.dropdown-triangle {
     width: 0;
     height: 0;
     border-width: 0 10px 10px;
@@ -148,8 +166,9 @@ button.navbar-toggle {
     left: 28px;
     top: -10px;
   }
-  .navbar.navbar-default .dropdown-menu > .dropdown-triangle::before {
-    content:'';
+
+  .navbar.navbar-default .dropdown-menu>.dropdown-triangle::before {
+    content: '';
     width: 0;
     height: 0;
     border-width: 0 10px 10px;
