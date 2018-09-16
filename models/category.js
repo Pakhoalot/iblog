@@ -3,23 +3,23 @@ const mongoose = db.mongoose;
 
 const categorySchema = new mongoose.Schema({
     // 分类名称
-    CategoryName: { 
+    categoryName: { 
         type: String,
         required: true,
         unique: true,
     },
     // 图标地址
-    Img: { type: String },
+    img: { type: String },
 
     // 链接地址
-    Link: { type: String },
+    link: { type: String },
     //生成时间
-    CreateTime: {
+    createTime: {
         type: Date,
         default: Date.now
     },
     //修改时间
-    ModifyTime: {
+    modifyTime: {
         type: Date,
         default: Date.now
     }

@@ -28,7 +28,7 @@ router.post('/create', (req, res, next) => {
 })
 
 router.post('/update-or-create', (req, res, next) => {
-    let params = req.body.CategoryName;
+    let params = req.body.categoryName;
     category.updateOrCreate(params,(err)=>{
         if(err) next(err);
         else {
@@ -40,7 +40,7 @@ router.post('/update-or-create', (req, res, next) => {
 })
 
 router.post('/delete-by-categoryname', (req, res, next) => {
-    let params = req.body.CategoryName;
+    let params = req.body.categoryName;
 
     category.deleteByCategoryName(params,(err)=>{
         if(err) next(err);

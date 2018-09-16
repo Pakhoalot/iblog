@@ -48,19 +48,19 @@ function getAll(cb){
  * @returns
  */
 function create({
-    CategoryName,
-    Img = '',
-    Link = '',
+    categoryName,
+    img = '',
+    link = '',
 }, cb) {
     //判断首参是否非法
-    if(!CategoryName || typeof cb !== 'function') {
+    if(!categoryName || typeof cb !== 'function') {
         logger.error('param category invaild');
         return cb(new TypeError('param category invaild'));
     }
     let param = {
-        CategoryName: CategoryName,
-        Img: Img,
-        Link: Link,
+        categoryName: categoryName,
+        img: img,
+        link: link,
     }
     redisClient.removeItem(CATEGORIES_REDIS_KEY, (err) => {
         if(err) {
@@ -83,9 +83,9 @@ function create({
  * @param {*} cb
  * @returns
  */
-function updateOrCreate(CategoryName, cb) {
+function updateOrCreate(categoryName, cb) {
     //判断首参是否非法
-    if(!CategoryName || typeof cb !== 'function') {
+    if(!categoryName || typeof cb !== 'function') {
         logger.error('param category invaild');
         return cb(new TypeError('param category invaild'));
     }
@@ -97,8 +97,8 @@ function updateOrCreate(CategoryName, cb) {
         }
         //成功删除缓存,插入到数据库
         Category.findOneAndUpdate(
-            {CategoryName: CategoryName},
-            {ModifyTime: Date.now()},
+            {categoryName: categoryName},
+            {modifyTime: Date.now()},
             {upsert: true},
             (err, category)=> {
             if(err) return cb(err);
@@ -113,8 +113,8 @@ function updateOrCreate(CategoryName, cb) {
  * @param {*} alias
  * @param {*} cb
  */
-function deleteByCategoryName(CategoryName, cb) {
-    if(!CategoryName || typeof CategoryName === 'function') {
+function deleteByCategoryName(categoryName, cb) {
+    if(!categoryName || typeof categoryName === 'function') {
         logger.error('categoryName invaild');
         return cb(new TypeError("params invaild"));
     }
@@ -126,7 +126,7 @@ function deleteByCategoryName(CategoryName, cb) {
         }
         //成功删除缓存,删除数据库副本
         
-        Category.deleteOne({CategoryName: CategoryName}, (err)=> {
+        Category.deleteOne({categoryName: categoryName}, (err)=> {
             if(err) return cb(err);
             else return cb(null);
         });
