@@ -8,7 +8,7 @@ router.get(['/','/blog','/blog/:category_name'], (req, res, next) => {
   let category_name = req.params.category_name;
   if(!category_name) category_name = ""; 
   post.getPostList({
-    CategoryName: category_name,
+    categoryName: category_name,
   },(err, postlist)=> {
     if(err) return next(err);
     else {
@@ -21,14 +21,6 @@ router.get(['/','/blog','/blog/:category_name'], (req, res, next) => {
             postlist: postlist,
             categories: categories,
             user: req.user,
-            //descripte render level handlebars helpers
-            helpers:{
-              shorten: function (str) {
-                if(typeof str === 'string')
-                  return str.substr(0, 244) + '...';
-                else return "hello world";
-              }
-            }
           })
         }
       })

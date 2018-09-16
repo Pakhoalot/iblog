@@ -65,11 +65,11 @@ router.post('/modify', (req, res, next) => {
 router.post('/create', (req, res, next) => {
   let param = req.body;
   //转换boolean值
-  if (param.IsDraft) {
-    param.IsDraft = (param.IsDraft === 'true');
+  if (param.isDraft) {
+    param.isDraft = (param.isDraft === 'true');
   }
-  if (param.IsActive) {
-    param.IsActive = (param.IsActive === 'true');
+  if (param.isActive) {
+    param.isActive = (param.isActive === 'true');
   }
   post.create(param, (err, result) => {
     if (err) next(err);

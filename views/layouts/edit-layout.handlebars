@@ -26,7 +26,7 @@
                     <img src="/img/favicon.ico" alt="logo">
                 </a>
 
-                <input name="title" id="input-title" value="{{post.Title}}" class="input-title" required="required" maxlength="40" placeholder="title:">
+                <input name="title" id="input-title" value="{{post.title}}" class="input-title" required="required" maxlength="40" placeholder="title:">
 
                 
             </div>
@@ -45,7 +45,7 @@
 
 
     </nav>
-
+    {{> user-message}}
     {{{body}}}
 
 

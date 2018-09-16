@@ -1,7 +1,7 @@
 {{!-- < main --}} <link rel="stylesheet" href="/css/lib/simplemde.min.css">
     <link rel="stylesheet" href="/css/edit.css">
     <div class="container-fluid edit-wrapper">
-        <textarea name="md" id="inputmd" class="form-control" value="haaha" rows="3" max-length="100" required="required" value="hahaha"></textarea>
+        <textarea name="md" id="inputmd" class="form-control" value="haaha" rows="3" max-length="100" required="required"></textarea>
 
     </div>
     {{!-- modal --}}
@@ -9,7 +9,7 @@
     {{> modal-upload}}
     {{> modal-message}}
     {{> footer}}
-    <p class="tmp-content" style="display:none;">{{post.Content}}</p>
+    <p class="tmp-content" style="display:none;">{{post.content}}</p>
     </script>
     <script src="/js/lib/simplemde.min.js"></script>
     <script src="/js/edit/edit.js"></script>

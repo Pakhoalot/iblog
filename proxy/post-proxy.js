@@ -18,8 +18,8 @@ var postlistKeysManager = new Set();
 function getPostList({
   skip = 0,
   limit = 10,
-  sort = "-CreateTime",
-  CategoryName = "",
+  sort = "-createTime",
+  categoryName = "",
 }, cb) {
   //判断参数合法性
   if (typeof cb !== 'function' ||
@@ -34,7 +34,7 @@ function getPostList({
     skip: skip,
     limit: limit,
     sort: sort,
-    CategoryName: CategoryName,
+    categoryName: categoryName,
   }
   const cache_key = redisClient.generateKey(POSTLIST_REDIS_PREFIX, tmp);
 
@@ -49,21 +49,22 @@ function getPostList({
     //缓存失败, 从数据库中提取
     //构建query对象
     let query = {
-      IsDraft: false,
-      IsActive: true,
+      isDraft: false,
+      isActive: true,
     }
-    if (CategoryName) query.CategoryName = CategoryName;
+    if (categoryName) query.categoryName = categoryName;
     //构建投影,为了不提供多余值,例如content
     let post_projection = {
       "_id": 1,
-      "Title": 1,
-      "Summary": 1,
-      "Content": 1,
-      "CategoryName": 1,
-      "Labels": 1,
-      "ViewCount": 1,
-      "ModifyTime": 1,
-      "CreateTime": 1,
+      "title": 1,
+      "summary": 1,
+      "content": 1,
+      "categoryName": 1,
+      "author":1,
+      "labels": 1,
+      "viewCount": 1,
+      "modifyTime": 1,
+      "createTime": 1,
     }
     //构建options, 限制取出值 偏移和排序
     let options = {
@@ -154,9 +155,9 @@ function modify(postId, update, cb) {
   redisClient.removeItem(cache_key, (err) => {
     if (err) return cb(err);
     //更新到数据库中
-    update.ModifyTime = Date.now();
+    update.modifyTime = Date.now();
     //对标签进行处理
-    if(update.Labels) update.Labels = update.Labels.split(' '),
+    if(update.labels) update.labels = update.labels.split(' '),
     Post.updateOne({
       _id: postId
     }, update, (err, result) => {
@@ -185,37 +186,39 @@ function modify(postId, update, cb) {
  * @returns
  */
 function create({
-  Title,
-  Summary = '',
-  Source = '',
-  Content = '',
-  ContentType = 'markdown',
-  CategoryName = '',
-  Labels = '',
-  Url = '',
-  IsDraft = true,
-  IsActive = true
+  title,
+  summary = '',
+  source = '',
+  content = '',
+  contentType = 'markdown',
+  categoryName = '',
+  labels = '',
+  url = '',
+  author = '',
+  isDraft = true,
+  isActive = true
 }, cb) {
   //判断参数是否合法
-  if (!Title ||
-    typeof IsDraft !== 'boolean' ||
-    typeof IsActive !== 'boolean') {
+  if (!title ||
+    typeof isDraft !== 'boolean' ||
+    typeof isActive !== 'boolean') {
 
     logger.error('param invaild');
     return cb(new TypeError('param post invaild'));
   }
 
   let param = {
-    Title: Title,
-    Summary: Summary,
-    Source: Source,
-    Content: Content,
-    ContentType: ContentType,
-    CategoryName: CategoryName,
-    Labels: Labels.split(' '),
-    Url: Url,
-    IsDraft: IsDraft,
-    IsActive: IsActive,
+    title,
+    summary,
+    source,
+    content,
+    contentType,
+    categoryName,
+    labels: labels.split(' '),
+    url,
+    author,
+    isDraft,
+    isActive,
   };
   //清除所有列表cache
   redisClient.removeItems(postlistKeysManager, err => {
@@ -244,7 +247,7 @@ function softDelete(post_id, cb) {
   Post.updateOne({
     _id: post_id
   }, {
-    IsActive: false,
+    isActive: false,
     modifyTime: Date.now(),
   }, (err, result) => {
     if (err) {
@@ -272,8 +275,8 @@ function undo(post_id, cb) {
   Post.updateOne({
     _id: post_id
   }, {
-    IsActive: true,
-    ModifyTime: Date.now(),
+    isActive: true,
+    modifyTime: Date.now(),
   }, (err, result) => {
     if (err) {
       return cb(err);

@@ -3,30 +3,30 @@
     <div class="container article-container">
         <div class="article-title">
             <div class="main-title">
-                <h1>{{post.Title}}</h1>
+                <h1>{{post.title}}</h1>
             </div>
         </div>
         <div class="row">
             <div class="">
                 <div class="article-info">
                     <h4>
-                        {{#each post.Labels}}
+                        {{#each post.labels}}
                         <span class="label label-default">{{this}}</span>
                         {{/each}}
                     </h4>
                     <div class="date-author">
-                        <span class="date">
-                            <script>writeTime("{{post.CreateTime}}")</script> </span><span>&nbsp</span><a href="#">PakhoLeung</a>
+                        <span class="date">{{moment post.createTime}}</span><span>&nbsp</span><a href="#">PakhoLeung</a>
                     </div>
+                    {{#if post.summary}}
                     <div class="summary">
-                        <p>{{post.Summary}}</p>
+                        <p>{{post.summary}}</p>
                     </div>
+                    {{/if}}
                 </div>
 
-                <hr>
 
                 <div id="article-content" class="article-content">
-                    {{{post.Content}}}
+                    {{{mdparse post.content}}}
                 </div>
 
             </div>

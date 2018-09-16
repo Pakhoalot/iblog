@@ -5,12 +5,6 @@ module.exports = router;
 
 router.get(['/', '/:id'], (req, res, next) => {
   let post_id = req.params.id
-      let helpers = {
-        spliting: function (array) {
-          if (array) return array.join(' ');
-          return '';
-        }
-      };
       if (post_id) {
         post.getPost(post_id, (err, post) => {
           if (err) return next(err);
@@ -20,7 +14,6 @@ router.get(['/', '/:id'], (req, res, next) => {
               layout: 'edit-layout',
               post: post,
               user: req.user,
-              helpers: helpers
 
             });
           }
@@ -31,7 +24,6 @@ router.get(['/', '/:id'], (req, res, next) => {
           layout: 'edit-layout',
           user: req.user,
           // post: {},
-          helpers: helpers,
         });
       }
 })

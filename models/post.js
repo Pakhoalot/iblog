@@ -4,43 +4,43 @@ const mongoose = db.mongoose;
 //定义一个标题Schema
 const postSchema = new mongoose.Schema({
     //标题
-    Title: { 
+    title: { 
         type: String,
         required: true
      },
     //摘要
-    Summary: { type: String },
+    summary: { type: String },
     //来源
-    Source: { type: String },
+    source: { type: String },
     //内容
-    Content: { type: String },
+    content: { type: String },
     //内容类型：默认空 (html)，可选markdown
-    ContentType: { type: String },
+    contentType: { type: String },
     //分类Id
-    CategoryName: { type: String },
+    categoryName: { type: String },
     //标签
-    Labels: { type: [String] },
+    labels: { type: [String] },
     //外链Url
-    Url: { type: String },
+    url: { type: String },
     //浏览次数
-    ViewCount: { 
+    viewCount: { 
         type: Number,
         default: 0
     },
-    Author: {
+    author: {
         type: String,
     },
     //是否草稿
-    IsDraft: { type: Boolean },
+    isDraft: { type: Boolean },
     //是否有效
-    IsActive: { type: Boolean, default: true },
+    isActive: { type: Boolean, default: true },
     //生成时间
-    CreateTime: {
+    createTime: {
         type: Date,
         default: Date.now
     },
     //修改时间
-    ModifyTime: {
+    modifyTime: {
         type: Date,
         default: Date.now
     }

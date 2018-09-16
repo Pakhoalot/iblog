@@ -9,22 +9,21 @@
           {{#each postlist}}
           <li class="list-group-item article">
             <a href="/article/{{_id}}" class="article-title">
-              <h3 class="list-group-item-heading">{{Title}}</h3>
+              <h3 class="list-group-item-heading">{{title}}</h3>
             </a>
             <p class="list-group-item-text article-summary">
-              {{#if Content}} {{shorten Content}} {{/if}}<a href="/article/{{_id}}">read
+              {{#if content}} {{shorten content}} {{/if}}<a href="/article/{{_id}}">read
                 more</a></p>
             <div class="label-group">
               
-              {{#each Labels}}
+              {{#each labels}}
               <a type="button" class="label label-default">{{this}}</a>
               {{/each}}
             </div>
             <div class="date-author">
-              <span class="date">
-                <script>writeTime("{{CreateTime}}")</script></span><span>&nbsp</span><a href="/">PakhoLeung</a>
+              <span class="date">{{moment createTime}}</span><span>&nbsp</span><a href="/">{{author}}</a>
             </div>
-            <div class="view-count"><span>view:</span><span>{{ViewCount}}</span></div>
+            <div class="view-count"><span>view:</span><span>{{viewCount}}</span></div>
           </li>
           {{/each}}
         </ul>

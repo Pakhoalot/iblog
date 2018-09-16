@@ -98,13 +98,14 @@ $(document).ready(function () {
       $(this).attr('disabled', "true");
       //发送ajax请求
       $.post("/api/post/create", {
-          Title: $inputTitle.val(),
-          Content: simplemde.value(),
-          ContentType: "markdown",
-          CategoryName: $category.val() || 'Other',
-          Labels: $labels.val(),
-          IsDraft: false,
-          IsActive: true,
+          title: $inputTitle.val(),
+          content: simplemde.value(),
+          contentType: "markdown",
+          author: user ? user.username : '',
+          categoryName: $category.val() || 'Other',
+          labels: $labels.val(),
+          isDraft: false,
+          isActive: true,
         })
         .success(function (response) {
 
@@ -146,13 +147,14 @@ $(document).ready(function () {
       //发送ajax请求
       $.post("/api/post/modify", {
           postId: window.location.pathname.substr("/edit/".length),
-          Title: $inputTitle.val(),
-          Content: simplemde.value(),
-          ContentType: "markdown",
-          CategoryName: $category.val() || 'Other',
-          Labels: $labels.val(),
-          IsDraft: false,
-          IsActive: true,
+          title: $inputTitle.val(),
+          content: simplemde.value(),
+          contentType: "markdown",
+          categoryName: $category.val() || 'Other',
+          labels: $labels.val(),
+          author: user ? user.username : '',
+          isDraft: false,
+          isActive: true,
         })
         .success(function (response) {
           $(this).removeAttr("disabled");

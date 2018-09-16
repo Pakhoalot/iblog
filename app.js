@@ -2,16 +2,16 @@ const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
 const morgan = require('morgan');
+//include handlebars
+const exphbs = require('express-handlebars');
 const logger = require('./utility/logger');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 const session = require('express-session');
 const passport = require('passport');
-const helmet = require('helmet');
-const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
+require('./utility/passport-extension');
 const flash = require('connect-flash');
-//include handlebars
-const exphbs = require('express-handlebars');
 //****************路由设置***********************//
 const routes = require('./routes/index');
 const categoryApi = require('./routes/category');
@@ -31,7 +31,8 @@ app.locals.ENV_DEVELOPMENT = env == 'development';
 /* ********************load view engine ***************/
 app.engine('handlebars', exphbs({
   defaultLayout: 'main',
-  partialsDir: ['views/partials/']
+  partialsDir: ['views/partials/'],
+  helpers: require('./utility/handlebars-helpers'),
 }));
 
 app.set('views', path.join(__dirname, 'views'));
@@ -63,10 +64,10 @@ app.use(morgan('dev'));
 /* *********************routes********************************* */
 app.use('/', routes);
 app.use('/article', articleRoutes);
-app.use('/edit', ensureLoggedIn('/login'), editRoutes);
+app.use('/edit', passport.ensureLoggedIn({redirectTo:'/login'}), editRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/api/category', categoryApi);
-app.use('/api/post', postApi);
+app.use('/api/post', passport.ensureAuthorized(), postApi);
 app.use('/', authRoutes);
 /* *********************routes********************************* */
 
