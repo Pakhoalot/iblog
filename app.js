@@ -9,6 +9,7 @@ const session = require('express-session');
 const passport = require('passport');
 const helmet = require('helmet');
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
+const flash = require('connect-flash');
 //include handlebars
 const exphbs = require('express-handlebars');
 //****************路由设置***********************//
@@ -53,6 +54,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(morgan('dev'));

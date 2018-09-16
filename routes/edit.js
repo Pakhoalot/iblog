@@ -20,6 +20,7 @@ router.get(['/', '/:id'], (req, res, next) => {
               title: post.Title,
               layout: 'edit-layout',
               post: post,
+              user: req.user,
               helpers: helpers
 
             });
@@ -29,6 +30,7 @@ router.get(['/', '/:id'], (req, res, next) => {
         return res.render('edit', {
           title: "New Article",
           layout: 'edit-layout',
+          user: req.user,
           // post: {},
           helpers: helpers,
         });

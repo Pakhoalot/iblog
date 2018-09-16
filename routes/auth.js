@@ -51,14 +51,14 @@ router.post('/login', function (req, res, next) {
         title: 'Login',
         layout: 'main',
         user: req.user,
-        message: 'account invaild.'
+        message: info.message,
       });
     }
     req.logIn(user, function (err) {
       if (err) {
         return next(err);
       }
-      if (req.headers.referer === `http://${req.headers.host}/login`)
+      if (req.headers.referer === `${req.headers.origin}/login`)
         return res.redirect('/');
       else return res.redirect(req.headers.referer);
     });

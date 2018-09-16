@@ -17,6 +17,7 @@ router.get('/:id', (req, res, next) => {
       res.render('article', {
         post: post,
         title: post.Title,
+        user: req.user,
       });
     }
   });

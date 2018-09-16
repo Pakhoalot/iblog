@@ -20,6 +20,7 @@ router.get(['/','/blog','/blog/:category_name'], (req, res, next) => {
             title: 'Pakho Leung\'s Nest',
             postlist: postlist,
             categories: categories,
+            user: req.user,
             //descripte render level handlebars helpers
             helpers:{
               shorten: function (str) {

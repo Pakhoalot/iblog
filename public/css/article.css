@@ -78,3 +78,10 @@ pre code.hljs{
         display: none;
     }
 }
+
+
+@media(min-width:992px){
+    .container.article-container {
+        width: 750px;
+    }
+}

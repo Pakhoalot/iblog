@@ -27,6 +27,9 @@ const postSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    Author: {
+        type: String,
+    },
     //是否草稿
     IsDraft: { type: Boolean },
     //是否有效
